@@ -1,0 +1,4 @@
+- [x] Remove duplicate `handleLocation` method in `MainActivity.kt`
+- [x] Implement `checkZone(location: Location)` in `MainActivity.kt`
+- [x] Add missing imports (`java.util.Locale`)
+- [x] Verify build

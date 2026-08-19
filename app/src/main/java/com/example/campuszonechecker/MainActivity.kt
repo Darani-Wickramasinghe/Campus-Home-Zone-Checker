@@ -6,7 +6,9 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import java.util.Locale
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -173,20 +175,40 @@ class MainActivity : AppCompatActivity() {
         // Read longitude
         val longitude = location.longitude
 
+        // Display current coordinates
+        val tvCoordinates = findViewById<TextView>(R.id.tvCoordinates)
 
-        // For now, show the location using a Toast
-        Toast.makeText(
-            this,
-            "Latitude: $latitude\nLongitude: $longitude",
-            Toast.LENGTH_LONG
-        ).show()
+        tvCoordinates.text =
+            "Current: $latitude, $longitude"
 
+        // Member 4:
+        // Check the distance from the reference location
+        checkZone(location)
+    }
 
-        /*
-         * PERSON 4 will later use this Location object
-         * to calculate distance using distanceTo().
-         *
-         * So for Person 3, you can stop here.
-         */
+    private fun checkZone(location: Location) {
+        val results = FloatArray(1)
+        Location.distanceBetween(
+            location.latitude,
+            location.longitude,
+            REFERENCE_LATITUDE,
+            REFERENCE_LONGITUDE,
+            results
+        )
+        val distance = results[0]
+
+        // Display the distance
+        val tvDistance = findViewById<TextView>(R.id.tvDistance)
+        tvDistance.text = String.format(Locale.getDefault(), "Distance: %.2f m", distance)
+
+        // Display the status
+        val tvStatus = findViewById<TextView>(R.id.tvStatus)
+        if (distance <= ZONE_RADIUS_METERS) {
+            tvStatus.text = "Status: IN ZONE"
+            tvStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark))
+        } else {
+            tvStatus.text = "Status: OUT OF ZONE"
+            tvStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark))
+        }
     }
 }
