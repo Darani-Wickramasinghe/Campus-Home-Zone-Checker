@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
     companion object {
 
         // Reference latitude
-        const val REFERENCE_LATITUDE = 6.9271
+        const val REFERENCE_LATITUDE = 6.97427
 
         // Reference longitude
-        const val REFERENCE_LONGITUDE = 79.8612
+        const val REFERENCE_LONGITUDE = 79.91637
 
         // Zone radius in meters
         const val ZONE_RADIUS_METERS = 200f
